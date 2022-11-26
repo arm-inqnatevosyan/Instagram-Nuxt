@@ -13,6 +13,7 @@
     "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix"
   },
   "dependencies": {
+    "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/router": "^1.7.0",
     "core-js": "^3.25.3",

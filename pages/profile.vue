@@ -1,11 +1,6 @@
 <template>
-    <html>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <body>
-        
-      <div id="app">
-    
-    
+      <div>
+        <Navbar />
         <div v-for="(todo, key) in todos" :key="key">
            
             <div class="card">
@@ -40,7 +35,7 @@
             <div class='p' id = 'com'>
     
               
-                <h6 id='com' v-for="comments in post.comments" :key="post.id">coments:{{ comments.content }}</h6>
+                <h6 id='com' v-for="comments in post.comments" :key="comments.id">coments:{{ comments.content }}</h6>
                 <form v-on:submit.prevent="submitForm(post._id)">
                 <input  id="text" class="input" placeholder="Add Comment ..."  v-model="content"  name="content" />
                 <button id = 'send'><i class="fa-regular fa-paper-plane"></i></button>
@@ -52,20 +47,12 @@
         </div>
         </div>
       </div>
-    </body>
-    </html>
     </template>
     <script>
       import axios from "axios"; 
-      import {reactive} from 'vue';
-      import {useRouter} from "vue-router";
-      import {useStore} from "vuex";
       export default {
+        name:"ProfileVue",
         data() {
-         const data = reactive({
-           content: '',
-           img: ''
-        });
          return {
             todos:  [],
             posts: [],
@@ -85,8 +72,8 @@
               credentials: 'include'
             });
             const content = await response.json();
-            let x = JSON.stringify(content)
-            let mydata = JSON.parse(x);  
+            const x = JSON.stringify(content)
+            const mydata = JSON.parse(x);  
             this.todos = mydata
     
     
@@ -95,40 +82,34 @@
               credentials: 'include'
             });
             const contents = await responses.json();
-            let y = JSON.stringify(contents)
-            let mydatas = JSON.parse(y);
+            const y = JSON.stringify(contents)
+            const mydatas = JSON.parse(y);
             this.posts = mydatas
            
     
       
-            for(var i = 0;i < this.posts.length; i++){
-                         var Name = document.createElement("div");
-                         var Description = document.createElement("div");
-                         var Author = document.createElement("div");
+            for(let i = 0;i < this.posts.length; i++){
                          const url = `http://localhost:8000/api/${mydatas[i].img[0]}/post_image`
         
                          const options = {
                             method: "GET"
                          }
         
-                         let response = await fetch(url, options)
+                         const response = await fetch(url, options)
                          const imageBlob = await response.blob()
                          const imageObjectURL = URL.createObjectURL(imageBlob);
     
                          this.posts[i].img[0] = (imageObjectURL)
                          
             }
-            for(var i = 0;i < this.todos.length; i++){
-                         var Name = document.createElement("div");
-                         var Description = document.createElement("div");
-                         var Author = document.createElement("div");
+            for(let i = 0;i < this.todos.length; i++){
                          const url = `http://localhost:8000/api/${mydata[i].img[0]}/profile_image`
         
                          const options = {
                             method: "GET"
                          }
         
-                         let response = await fetch(url, options)
+                         const response = await fetch(url, options)
                          const imageBlob = await response.blob()
                          const imageObjectURL = URL.createObjectURL(imageBlob);
     
@@ -154,7 +135,7 @@
                   'Authorization':  `${cookieValue}`
                }     
                axios.post('http://localhost:8000/api/change-password', {content:this.content},{
-                   headers: headers
+                   headers
                })
               
           },
@@ -162,7 +143,7 @@
           onChange(e) {
              const file = e.target.files[0]
              this.item.imageUrl = URL.createObjectURL(file)
-             let images = new FormData();
+             const images = new FormData();
              images.append('image', file); 
              const cookieValue = document.cookie.split('; ').find((row) => row.startsWith('jwt='))?.split('=')[1];       
              axios.post(`http://localhost:8000/api/profile_image`, images,  {

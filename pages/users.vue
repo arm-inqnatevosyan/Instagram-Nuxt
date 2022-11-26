@@ -1,5 +1,6 @@
 <template>
       <div>
+        <Navbar />
       <div class="main">
         <div v-for="(todo, key) in todos" :key="key">
             <img :src="`${ todo.img[0]}`" height = '400' width = '400'>
@@ -15,15 +16,9 @@
     
     
     <script>
-      import axios from "axios"; 
-      import {reactive} from 'vue';
-      import {useRouter} from "vue-router";
-      import {useStore} from "vuex";
       export default {
+        name:"UsersVue",
         data() {
-         const data = reactive({
-           content: ''
-        });
          return {
             todos:  []
          };
@@ -38,18 +33,18 @@
               credentials: 'include'
             });
             const content = await response.json();
-            let x = JSON.stringify(content)
-            let mydata = JSON.parse(x);  
+            const x = JSON.stringify(content)
+            const mydata = JSON.parse(x);  
             this.todos = mydata
       
-            for(var i = 0;i < this.todos.length; i++){
+            for(let i = 0;i < this.todos.length; i++){
                          const url = `http://localhost:8000/api/${mydata[i].img[0]}/profile_image`
         
                          const options = {
                             method: "GET"
                          }
         
-                         let response = await fetch(url, options)
+                         const response = await fetch(url, options)
                          const imageBlob = await response.blob()
                          const imageObjectURL = URL.createObjectURL(imageBlob);
     

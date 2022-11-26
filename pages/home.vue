@@ -1,5 +1,6 @@
 <template>
       <div class="main">
+        <Navbar />
         <div v-for="(todo, key) in todos" :key="key">
          
             <img :src="`${ todo.img[0]}`" height = '400' width = '400'>
@@ -17,7 +18,7 @@
            
     
               
-                <h6 id='com' v-for="comments in todo.comments" :key="todo.id">coments:{{ comments.content }}</h6>
+                <h6 id='com' v-for="comments in todo.comments" v-bind:key="comments.id" >coments:{{ comments.content }}</h6>
                 <form v-on:submit.prevent="submitForm(todo._id)">
                 <input  id="text" placeholder="Add Comment ..."  v-model="content"  name="content" />
                 <button id = 'send'><i class="fa-regular fa-paper-plane"></i></button>
@@ -33,14 +34,9 @@
     
     <script>
       import axios from "axios"; 
-      import {reactive} from 'vue';
-      import {useRouter} from "vue-router";
-      import {useStore} from "vuex";
+
       export default {
         data() {
-         const data = reactive({
-           content: ''
-        });
          return {
             todos:  []
          };
@@ -55,19 +51,19 @@
               credentials: 'include'
             });
             const content = await response.json();
-            let x = JSON.stringify(content)
-            let mydata = JSON.parse(x);  
+            const x = JSON.stringify(content)
+            const mydata = JSON.parse(x);  
             this.todos = mydata
      
       
-            for(var i = 0;i < this.todos.length; i++){
+            for(let i = 0;i < this.todos.length; i++){
                          const url = `http://localhost:8000/api/${mydata[i].img[0]}/post_image`
         
                          const options = {
                             method: "GET"
                          }
         
-                         let response = await fetch(url, options)
+                         const response = await fetch(url, options)
                          const imageBlob = await response.blob()
                          const imageObjectURL = URL.createObjectURL(imageBlob);
     
@@ -91,9 +87,6 @@
       };
     </script>
     <style scoped>
-    body{
-      width:100% !important;
-    }
     .main{
         width: 100% !important;
         display: grid;

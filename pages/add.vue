@@ -1,5 +1,6 @@
 <template>
     <div>
+      <Navbar />
       <form action='http://localhost:8000/api/post_image' enctype="multipart/form-data" method="post" target="hiddenFrame">
       <div class="form-group">
         <input type="file" class="form-control-file" name="image">
@@ -14,29 +15,29 @@
     
     <script>
     import axios from "axios";
+import Navbar from "../components/Navbar.vue";
     export default {
-      data() {
-          return {
-             FILE: null,
-             name: ''
-          };
+    data() {
+        return {
+            FILE: null,
+            name: ""
+        };
+    },
+    methods: {
+        onFileUpload(event) {
+            this.FILE = event.target.files[0];
         },
-        methods: {
-            onFileUpload (event) {
-              this.FILE = event.target.files[0]
-            },
-            onSubmit() {
-              const formData = new FormData()
-              formData.append('avatar', this.FILE, this.FILE.name)
-              formData.append('name', this.name)
-              axios.post('http://localhost:8000/api/post', formData, {
-              }).then((res) => {
-                console.log(res)
-              })
-              
-            }  
+        onSubmit() {
+            const formData = new FormData();
+            formData.append("avatar", this.FILE, this.FILE.name);
+            formData.append("name", this.name);
+            axios.post("http://localhost:8000/api/post", formData, {}).then((res) => {
+                console.log(res);
+            });
         }
-    }
+    },
+    components: { Navbar }
+}
     </script>
     <style scoped>
     body{

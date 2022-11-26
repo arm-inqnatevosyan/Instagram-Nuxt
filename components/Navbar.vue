@@ -12,6 +12,9 @@
             <li><NuxtLink to="/">Home</NuxtLink></li>
             <li><NuxtLink to="/sign">Sign In</NuxtLink></li>
             <li><NuxtLink to="/registr">Register</NuxtLink></li>
+            <li><NuxtLink to="/profile">Profile</NuxtLink></li>
+            <li><NuxtLink to="/Users">Users</NuxtLink></li>
+            <li><NuxtLink to="/add">Add</NuxtLink></li>
         </ul>
     </nav>
 </template>
@@ -47,17 +50,19 @@ ul{
     justify-content: space-around;
     align-items: center;
     height: 70px;
+    margin-left: 120px;
 }
 .icons i{
     font-size: 21px;
 }
 li{
-    margin-left: 30px;
+    margin-left: 20px;
 }
 a{
     text-decoration: none;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: black;
+    font-size: 14px;
 }
 </style>
   

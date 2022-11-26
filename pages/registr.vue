@@ -37,7 +37,7 @@
 </template>
 <script >
 import {reactive} from 'vue';
-
+import { useRouter } from '@nuxtjs/composition-api'
 export default {
   name: "Register",
   setup() {
@@ -46,14 +46,14 @@ export default {
       email: '',
       password: ''
     });
-   
+    const router = useRouter();
     const submit = async () => {
-      await fetch('http://localhost:8000/api/register', {
+      await fetch('http://localhost:3000/api/register', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
       });
-     
+       await router.push('/sign')
     }
     return {
       data,
@@ -67,13 +67,13 @@ export default {
 
     .block{
         height: 78vh;
-        width: 40%;
+        width: 40% !important; 
         border: 1px solid rgba(128, 128, 128, 0.363);
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding: 20px;
+        padding: 30px ;
         margin: 20px auto;
         }
         .block h1{

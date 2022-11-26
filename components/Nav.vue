@@ -1,106 +1,78 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-      <div class="container-fluid" >
-  
-        <div>
-          <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="!auth">
-            <li class="nav-item">
-              <router-link to="/login" class="nav-link">Login</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/register" class="nav-link">Register</router-link>
-            </li>
-          </ul>
-  
-          <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="auth">
-            <li class="nav-item">
-              <a href="#" class="nav-link" @click="logout">Logout</a>
-            </li>
-             <li class="nav-item">
-                <router-link to="/home" class="nav-link">Home</router-link>
-            </li>
-             <li class="nav-item">
-                <router-link to="/addpost" class="nav-link">Add Post</router-link>
-            </li>
-             <li class="nav-item">
-                <router-link to="/users-name" class="nav-link">All Users Info</router-link>
-            </li>
-             <li class="nav-item">
-                <router-link to="/profile" class="nav-link">Profile</router-link>
-            </li>
-          </ul>
+    <nav>
+        <div class="logo"><h1>Instagram</h1></div>
+        <div class="icons">
+             <NuxtLink to="/"><i class="fa-solid fa-house"></i></NuxtLink>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <NuxtLink to="/"><img src="./story/home.png" width="20" /></NuxtLink>
+            <img src="./story/search.png" width="20" />
+            <img src="./story/heart.png" width="20" />
         </div>
-  
-      </div>
+        <ul>
+            <li><NuxtLink to="/">Home</NuxtLink></li>
+            <li><NuxtLink to="/sign">Sign In</NuxtLink></li>
+            <li><NuxtLink to="/registr">Register</NuxtLink></li>
+            <li><NuxtLink to="/profile">Profile</NuxtLink></li>
+        </ul>
     </nav>
   </template>
   
   
   <style>
-          @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-          @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-          *{
-              margin: 0;
-              padding: 0;
-              box-sizing: border-box;
-          }
-          nav{
-              display: flex;
-              width: 100%;
-              height: 60px;
-              justify-content: space-between;
-              align-items: center;
-              background: linear-gradient(to left,rgb(118, 84, 173),rgb(150, 77, 59));
-          }
-          .logo{
-              font-family: 'Lobster', cursive;
-              font-weight: 200;
-              font-size:20px;
-              color: white;
-              margin-left: 50px;
-              letter-spacing: 2px;
-          }
-          nav ul {
-              display: flex;
-              list-style: none;
-          }
-          nav li{
-              width: 150px;
-          }
-          nav a{
-              text-decoration: none;
-              color: white;
-              letter-spacing: 1px;
-              font-size: 15px;
-              font-family: 'Roboto', sans-serif;
-          }
-          @media (max-width:700px) {
-              nav .logo{
-                  margin-left: 30px;
-                  font-size: 16px;
-              }
-              nav li{
-                  width: 100px;
-              }
-          }
-      </style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+nav{
+    width:  80%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto !important;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+ul{
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+.logo{
+    font-family: 'Lobster', cursive;
+    width: 200px;
+}
+.icons{
+    width: 160px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 20px;
+}
+.icons i{
+    font-size: 21px;
+}
+li{
+    margin-left: 30px;
+}
+a{
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: black;
+}
+  </style>
   
   
   
-  <script lang="ts">
+  <script >
   import {computed} from 'vue';
-  import {useStore} from "vuex";
-  import {useRouter} from "vue-router";
-  
+  import { useRouter, useStore } from '@nuxtjs/composition-api'
   export default {
-    name: "Nav",
+    name: "NavVue",
     setup() {
       const router = useRouter();
       const store = useStore();
   
       const auth = computed(() => store.state.authenticated)
   
-      const logout = async () => {
+      const logout = () => {
                  document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                  router.push('/');
                  store.dispatch('setAuth', false);
