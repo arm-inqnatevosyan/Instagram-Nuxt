@@ -92,10 +92,11 @@
             main{
                 display: flex;
                 flex-direction: column;
+                width: 100%;
             }
            
             .block{
-                height: 78vh;
+                height: 81vh;
                 width: 40%;
                 border: 1px solid rgba(128, 128, 128, 0.363);
                 display: flex;

@@ -18,7 +18,7 @@
   </template>
   
   
-  <style>
+  <style scoped>
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 nav{
     width:  80%;

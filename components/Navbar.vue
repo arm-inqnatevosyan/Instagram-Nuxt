@@ -1,19 +1,18 @@
 <template>
     <nav>
-        <div class="logo"><h1>Instagram</h1></div>
+        <NuxtLink to="/"><div class="logo"><h1>Instagram</h1></div></NuxtLink>
         <div class="icons">
-             <NuxtLink to="/"><i class="fa-solid fa-house"></i></NuxtLink>
             <i class="fa-solid fa-magnifying-glass"></i>
             <NuxtLink to="/"><img src="./story/home.png" width="20" /></NuxtLink>
-            <img src="./story/search.png" width="20" />
-            <img src="./story/heart.png" width="20" />
+            <NuxtLink to="/add"><img src="./story/search.png" width="20" /></NuxtLink>
+            <NuxtLink to="/users"><img src="./story/users.png" width="20" /></NuxtLink>
         </div>
         <ul>
             <li><NuxtLink to="/">Home</NuxtLink></li>
             <li><NuxtLink to="/sign">Sign In</NuxtLink></li>
             <li><NuxtLink to="/registr">Register</NuxtLink></li>
             <li><NuxtLink to="/profile">Profile</NuxtLink></li>
-            <li><NuxtLink to="/Users">Users</NuxtLink></li>
+            <li><NuxtLink to="/users">Users</NuxtLink></li>
             <li><NuxtLink to="/add">Add</NuxtLink></li>
         </ul>
     </nav>
