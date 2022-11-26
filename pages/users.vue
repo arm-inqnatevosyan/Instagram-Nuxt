@@ -1,0 +1,143 @@
+<template>
+      <div>
+      <div class="main">
+        <div v-for="(todo, key) in todos" :key="key">
+            <img :src="`${ todo.img[0]}`" height = '400' width = '400'>
+            <div class="icons">
+                <p><i class="fa-regular fa-heart"></i></p>
+            </div>
+            <p class='ed'>username: {{ todo.name }}</p><br>
+            <p class='ed'>email: {{ todo.email }}</p><br>         
+        </div>
+        </div>
+      </div>
+</template>
+    
+    
+    <script>
+      import axios from "axios"; 
+      import {reactive} from 'vue';
+      import {useRouter} from "vue-router";
+      import {useStore} from "vuex";
+      export default {
+        data() {
+         const data = reactive({
+           content: ''
+        });
+         return {
+            todos:  []
+         };
+        },
+       methods: {
+            
+     async created() {
+        try {
+            const cookieValue = document.cookie.split('; ').find((row) => row.startsWith('jwt='))?.split('=')[1];                    
+            const response = await fetch('http://localhost:8000/api/users-name', {
+              headers: {'Content-Type': 'application/json', 'Authorization': `${cookieValue}`},
+              credentials: 'include'
+            });
+            const content = await response.json();
+            let x = JSON.stringify(content)
+            let mydata = JSON.parse(x);  
+            this.todos = mydata
+      
+            for(var i = 0;i < this.todos.length; i++){
+                         const url = `http://localhost:8000/api/${mydata[i].img[0]}/profile_image`
+        
+                         const options = {
+                            method: "GET"
+                         }
+        
+                         let response = await fetch(url, options)
+                         const imageBlob = await response.blob()
+                         const imageObjectURL = URL.createObjectURL(imageBlob);
+    
+                         this.todos[i].img[0] = (imageObjectURL)
+                         
+            }
+        } catch (e) {
+          console.error(e);
+        }
+      },   
+        },
+    
+        mounted() {
+          this.created();
+        
+        },
+      };
+    </script>
+    <style scoped>
+    body{
+      width:100% !important;
+    }
+    .main{
+        width: 100% !important;
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        margin-left:10% !important;
+        margin-top:50px;
+    }
+    .icons{
+      display:flex;
+      width:60px !important;
+      justify-content:space-between;
+      margin-right:0;
+      float:right;
+    }
+    .main div{
+      width:50%;
+      padding-left:10px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .main img{
+        height: 400px;
+        width:100%;
+        position:relative;
+    }
+    h1 {
+      text-decoration: underline;
+    }
+    .ed{
+      padding-left:10px;
+    }
+    li {
+      color: white;
+    }
+    .p{
+      display:none;
+    }
+    form{
+        display:flex;
+        justify-content: space-between;
+        width: 350px !important;
+        align-items: center;
+        height: 40px;
+        margin-top:10px;
+    }
+    form i{
+      outline:none;
+      border:none !important;
+      font-size:20px;
+      color:rgb(52, 157, 228);
+    }
+    form button{
+      height:35px;
+      width:50px;
+    }
+    form input{
+      width:300px;
+      height:35px;
+      outline:none !important;
+      padding-left:10px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    ::placeholder{
+      color:black;
+    }
+    </style>
+    
+    
+    
+    
